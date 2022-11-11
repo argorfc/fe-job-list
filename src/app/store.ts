@@ -1,10 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import jobReducer from '../features/job/jobSlice';
+import { jobApi } from '../services/job';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    jobs: jobReducer,
+    [jobApi.reducerPath]: jobApi.reducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(jobApi.middleware)
 });
 
 export type AppDispatch = typeof store.dispatch;
